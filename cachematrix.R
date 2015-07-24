@@ -3,21 +3,24 @@
 
 ## This function supply a cached inverse matrix to cacheSolve if available
 makeCacheMatrix <- function(x = matrix()) {
-
-}
+    initialMatrix <- x
+    setCache <- function(cache) m <<- m
+    getCache <- function() m
+    }
 
 
 ## This function will provide the inverse of the input matrix
 cacheSolve <- function(x, ...) {
-        if(is.null(m)){
-            library(MASS)
-            solution <- ginv(x)
-            makeCacheMatrix(solution)
-        }else{
-            retrieveM
-            solution <- m
-        }
-        ## Return a matrix that is the inverse of 'x'
-        return(solution)
+    library(MASS)
+    m <- x$getCache
+    if(!is.null(m)){
+        message("retrieving cached matrix")
+        return(m)
+    }
+    matrix <- x$initialMatrix
+    invertMatrix <- ginv(matrix)
+    x$setCache(invertMatrix)    
+    m <- invertMatrix
+    ## Return a matrix that is the inverse of 'x'
+    return(m)
 }
-
