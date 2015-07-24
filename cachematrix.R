@@ -3,9 +3,15 @@
 
 ## This function supply a cached inverse matrix to cacheSolve if available
 makeCacheMatrix <- function(x = matrix()) {
-    initialMatrix <- x
+    initialMatrix <- function()
+        x <<- y
+        m <<- NULL
+    getMatrix <- function() x
     setCache <- function(cache) m <<- m
     getCache <- function() m
+    list(setCache = setCache, 
+         getCache = getCache,
+         initialMatrix = initialMatrix)
     }
 
 
@@ -17,7 +23,7 @@ cacheSolve <- function(x, ...) {
         message("retrieving cached matrix")
         return(m)
     }
-    matrix <- x$initialMatrix
+    matrix <- x$getMatrix
     invertMatrix <- ginv(matrix)
     x$setCache(invertMatrix)    
     m <- invertMatrix
